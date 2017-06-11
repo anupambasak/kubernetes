@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: hdfs
+  name: hdfs-config
+data:
+  core-site.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+        <property>
+            <name>fs.defaultFS</name>
+            <value>hdfs://namenode-service</value>
+        </property>
+        <property>
+          <name>hadoop.tmp.dir</name>
+          <value>/data/hadoop/tmp</value>
+        </property>
+    </configuration>
+  hdfs-site.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+        <property>
+            <name>dfs.namenode.name.dir</name>
+            <value>/data/hadoop/namenode</value>
+        </property>
+        <property>
+          <name>dfs.datanode.data.dir</name>
+          <value>/data/hadoop/datanode</value>
+        </property>
+        <property>
+          <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
+          <value>false</value>
+        </property>
+        <property>
+          <name>dfs.replication</name>
+          <value>1</value>
+        </property>
+    </configuration>

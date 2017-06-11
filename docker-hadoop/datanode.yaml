@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: datanode
+  namespace: hdfs
+spec:
+  containers:
+  - image: anupambasak/docker-hadoop
+    command:
+      - /opt/hadoop-2.7.3/bin/hdfs
+      - "--config"
+      - "/etc/hadoop"
+      - "datanode"
+    imagePullPolicy: IfNotPresent
+    name: datanode
+    volumeMounts:
+    - name: hdfs-config-vol
+      mountPath: /etc/hadoop
+    - name: hdfs-namenode-vol
+      mountPath: /data
+  volumes:
+  - name: hdfs-config-vol
+    configMap:
+      name: hdfs-config
+  - name: hdfs-namenode-vol
+    persistentVolumeClaim:
+      claimName: hdfs-claim
+  restartPolicy: Always
+
